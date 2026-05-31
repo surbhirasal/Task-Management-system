@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskManagementSystem</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#949598,#d4c1e8);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:500px;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.input-section{
+    display:flex;
+    gap:10px;
+}
+
+input[type="text"]{
+    flex:1;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    background:#667eea;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#5563d6;
+}
+
+ul{
+    list-style:none;
+    margin-top:20px;
+}
+
+li{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px;
+    margin-bottom:10px;
+    background:#f5f5f5;
+    border-radius:8px;
+}
+
+.task{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.completed{
+    text-decoration:line-through;
+    color:gray;
+}
+
+.delete-btn{
+    background:rgb(246, 101, 101);
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1>📋 TaskFlow</h1>
+
+    <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Enter a task">
+        <button id="addBtn">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+
+</div>
+
+<script>
+
+const addBtn = document.getElementById("addBtn");
+const taskInput = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
+
+addBtn.addEventListener("click", function () {
+
+    const taskText = taskInput.value.trim();
+
+    if(taskText === ""){
+        alert("Please enter a task");
+        return;
+    }
+
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+        <div class="task">
+            <input type="checkbox">
+            <span>${taskText}</span>
+        </div>
+        <button class="delete-btn">Delete</button>
+    `;
+
+    const checkbox = li.querySelector("input[type='checkbox']");
+    const taskSpan = li.querySelector("span");
+
+    checkbox.addEventListener("change", function () {
+
+        if(checkbox.checked){
+            taskSpan.classList.add("completed");
+        }else{
+            taskSpan.classList.remove("completed");
+        }
+
+    });
+
+    const deleteBtn = li.querySelector(".delete-btn");
+
+    deleteBtn.addEventListener("click", function () {
+        li.remove();
+    });
+
+    taskList.appendChild(li);
+
+    taskInput.value = "";
+
+});
+
+</script>
+
+</body>
+</html>
